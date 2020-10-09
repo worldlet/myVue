@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<!-- 模板中读数据找的都是vm -->
+<div id="demo">
+    <p v-if="ok">表白成功</p>
+    <p v-else>表白失败</p>
+
+    <p v-show="ok">求婚成功</p>
+    <p v-show="!ok">求婚失败</p>
+
+    <button @click="ok = !ok">切换</button>
+</div>
+<script src="../../js/vue.js"></script>
+<script>
+    new Vue({
+        el: '#demo',
+        data () {
+            return {
+                ok: true
+            }
+        }
+    })
+</script>
+</body>
+</html>
