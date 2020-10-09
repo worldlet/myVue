@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<div id="test">
+    <input type="text" v-model="msg">
+    <p>hello {{msg}}</p>
+</div>
+<div id="test2">
+    <p>{{msg}}</p>
+</div>
+<script src="../js/vue.js"></script>
+<script>
+    /*
+    * 模板页面：html + js
+    * js以什么形式存在？
+    *   指令：
+    *   插值：
+    *
+    * 数据绑定(单向)：
+    *   数据流向：data ==> template(模板)页面
+    *
+    * 双向数据绑定：
+    *   数据流向：data <==> template(模板)页面
+    *
+    * */
+
+    new Vue({                   // 配置对象：属性名是一些特定的名称，每个属性就是一个选项
+        el: '#test',            // 选择器字符串          ==>  用于指定模板的根源算
+        data: {                 // 包含一些数据属性的对象  ==>  为模板提供数据
+            msg: 'test'
+        }
+    })
+    new Vue({
+        data: {
+            msg: 'test2'
+        }
+    }).$mount('#test2')
+</script>
+</body>
+</html>

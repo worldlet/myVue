@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<div id="app">
+    <h2>1. 双大括号表达式 | 插值</h2>
+    <p>--{{msg}}--</p>
+    <p>--{{msg.toUpperCase()}}--</p>
+
+    <h2>2.指令一：强制数据绑定</h2>   <!-- 属性值是一个动态的值 -->
+    <a v-bind:href="url">去学习</a>
+    <a :href="url">去学习</a>
+
+    <h2>3.指令二：绑定事件监听</h2>
+    <button v-on:click="test">按钮</button>
+    <button @click="test">按钮</button>
+</div>
+<script src="../../js/vue.js"></script>
+<script>
+    new Vue({
+        el: '#app',
+        data: {
+            msg: 'hello word!',
+            url: 'http://www.baidu.com'
+        },
+        methods: {
+            test (event) {
+                alert(event.target.innerText);
+            }
+        }
+    })
+    /*
+    * 1.表达式不是一个完整的结构，不能单独存在，需要与其他结构配合才能正常存在，而语句可以独立存在;
+    * 2.表达式返回一个数据结构，语句不会返回一个结果(是去做一个特定工作去的);
+    *
+    * */
+</script>
+</body>
+</html>
