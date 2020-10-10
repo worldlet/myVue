@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<div id="example">
+    <p v-text="msg"></p>    <!-- p.textContent = msg值 -->
+    <p v-html="msg"></p>    <!-- p.innerHTML = msg值 -->
+</div>
+<div id="test">
+    <p v-text="msg"></p>
+    <p v-upper-text="msg"></p>
+    <p v-lower-text="msg"></p>
+</div>
+<script src="../../js/vue.js"></script>
+<script>
+    /*
+    * 常用内置指令：
+    *   v:text: 更新元素的textContent
+    *   v-html: 更新元素的innerHTML
+    *   v-if: 如果为true，当前标签输出到页面
+    *   v-else: 如果为false，当前标签输出到页面
+    *   v-show: 通过控制display样式来显示/隐藏元素
+    *   v-for: 遍历数组/对象
+    *   v-on: 绑定事件监听，一般简写为@
+    *   v-bind: 强制绑定捷稀表达式，可以省略v-bind
+    *   v-model: 双向数据绑定
+    *   ref: 为某个元素注册一个微医的标识，vue对象通过￥els属性访问这个元素的对象
+    *
+    * 自定义指令：
+    * 1.注册全局指令
+    * Vue.directive('my-directive', function(el, binding){
+    *   el.innerHTML = binding.value.toupperCase()
+    * })
+    *
+    * 2.注册局部指令
+    * directives : {
+    *   'my-directive' : function (el, binding) {
+    *       el.innerHTML = binding.value.toupperCase()
+    *    }
+    * }
+    *
+    * 3.使用指令
+    * v-my-directive='xxx'
+    * */
+
+    /*
+    * 注册全局指令
+    * el: 指令属性所在的标签元素
+    * binding: 包含指令相关数据的对象
+    * */
+    Vue.directive('upper-text', function (el, binding) {
+        console.log(binding);
+        el.textContent = binding.value.toUpperCase();
+    })
+
+    new Vue({
+        el: '#example',
+        data: {
+            msg: '<a href="http://www.baidu.com">百度一下</a>'
+        }
+    })
+
+    new Vue({
+        el: '#test',
+        data: {
+            msg: 'I like this!'
+        },
+        // 注册局部指令: 只对当前vm管理的模板有效
+        directives: {
+            // 'lower-text' : function (el, binding) {
+            'lower-text' (el, binding) {
+                el.innerHTML = binding.value.toLowerCase();
+            }
+        }
+    })
+</script>
+</body>
+</html>

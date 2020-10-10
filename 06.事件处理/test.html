@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<div id="example">
+    <h2>1.绑定监听</h2>
+    <button @click="test1">测试按钮1</button>
+    <button @click="test2('测试参数')">测试按钮2</button>
+    <button @click="test3('测试参数', $event)">测试按钮3</button>
+
+    <h2>2.事件修饰符</h2>
+    <!--
+        事件处理的两个操作：
+        1.阻止事件默认行为
+        @click.prevent
+
+        2.停止事件冒泡
+        @click.stop
+    -->
+    <a href="http://www.baidu.com" @click.prevent="test4">连接测试</a>
+    <div style="width: 200px; height: 200px; background-color: skyblue;" @click="test5">
+        <div style="width: 100px; height: 100px; background-color: yellowgreen;" @click.stop="test6"></div>
+    </div>
+    <button @click.once="test7">按钮</button>
+
+    <h2>3.按键修饰符</h2>
+<!--    <input type="text" v-model="msg" @keyup="test8">-->
+    <input type="text" v-model="msg" @keyup.enter="test8">
+
+</div>
+<script src="../../js/vue.js"></script>
+<script>
+    new Vue({
+        el: '#example',
+        date: {
+            msg: ''
+        },
+
+        methods: {
+            test1 (event) {
+                alert(event.target.innerHTML);
+            },
+            test2 (name) {
+                alert(name);
+            },
+            test3 (name, event) {
+                alert(name + '-' + event.target.innerHTML);
+            },
+            test4 (event) {
+                // event.preventDefault();
+            },
+            test5 () {
+                alert('out');
+            },
+            test6 () {
+                alert('inner')
+            },
+            test7 () {
+                alert('inner')
+            },
+            test8 (event) {
+                // if (event.keyCode === 13) {
+                    alert(this.msg);
+                // }
+            }
+
+        }
+    })
+</script>
+</body>
+</html>

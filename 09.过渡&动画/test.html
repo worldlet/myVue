@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+        /* 指定显示/隐藏过渡样式 */
+        .fade-enter-active, .fade-leave-active {
+            transition: opacity .5s;
+        }
+        .fade-enter, .fade-leave-to /* .fade-leave-active below version 2.1.8 */ {
+            opacity: 0;
+        }
+
+        .example-enter-active {
+            transition: all 1s;
+        }
+        .example-leave-active {
+            transition: all 3s;
+        }
+        .example-enter, .example-leave-to {
+            opacity: 0;
+            transform: translateX(20px);
+        }
+    </style>
+</head>
+<body>
+<div id="demo">
+    <button v-on:click="show = !show">
+        Toggle
+    </button>
+    <transition name="fade">
+        <p v-if="show">hello</p>
+    </transition>
+</div>
+<div id="demo2">
+    <button v-on:click="show = !show">
+        Toggle
+    </button>
+    <transition name="example">
+        <p v-if="show">hello</p>
+    </transition>
+</div>
+
+
+<script src="../../js/vue.js"></script>
+<script>
+    new Vue({
+        el: '#demo',
+        data: {
+            show: true
+        }
+    })
+    new Vue({
+        el: '#demo2',
+        data: {
+            show: true
+        }
+    })
+</script>
+</body>
+</html>

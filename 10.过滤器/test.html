@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<div id="test">
+    <h2>显示格式化的日期时间</h2>
+    <p>开始时间：{{startTime}}</p>
+    <p>开始时间：{{startTime | dateFormat}}</p>
+    <p>开始时间：{{startTime | dateFormat('YYYY.MM.DD')}}</p>
+</div>
+<script src="https://cdn.bootcdn.net/ajax/libs/moment.js/2.24.0/moment.js"></script>
+<script src="../../js/vue.js"></script>
+<script>
+    /*
+    * 理解过滤器：
+    *   功能：对要下是的数据进行特定格式化后再显示
+    *   注意：并没有改变原本的数据，而是产生新的对应的数据
+    *
+    * 编码：
+    *   定义过滤器：
+    *   Vue.filter(filterName, function(value[,arg1, arg2, ...]){
+    *       return newValue
+    *   })
+    *
+    *
+    * */
+
+    // 自定义一个过滤器
+    Vue.filter('dateFormat', function (value, formatStr) {     // value需要处理的数据
+    //Vue.filter('dateFormat', function (value, formatStr = 'YYYY.MM.DD HH:mm:ss') {  // 方法二：形参默认值
+        // day-js | moment | date-fns
+        return moment(value).format(formatStr || 'YYYY.MM.DD HH:mm:ss');
+        //return moment(value).format(formatStr); // 方法二：形参默认值
+    })
+    new Vue({
+        el: '#test',
+        data () {
+            return {
+                startTime: Date.now() - 1000
+            }
+        }
+    })
+</script>
+</body>
+</html>

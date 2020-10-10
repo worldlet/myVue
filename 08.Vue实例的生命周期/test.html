@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<div>
+    <button @click="destroyVM">destroy vue</button>
+    <p v-show="isShow">xxx</p>
+</div>
+<script src="../../js/vue.js"></script>
+<script>
+    new Vue({
+        data: {
+            isShow: true
+        },
+
+        /*
+        * 界面初始显示之后立即回调
+        * 一般在此执行异步操作：发ajax请求/启动定时器/订阅消息/绑定自定义事件监听
+        * */
+        mounted () {
+            this.intervalId = setInterval(() => {
+                console.log('-------------');
+                this.isShow = !this.isShow;
+            }, 1000);
+            /*
+            方法一：不使用箭头函数，需要提前保存this
+            const that = this;
+            setInterval(function () {
+                that.isShow = !that.isShow;
+            }, 1000);
+            方法二：bind()
+            setInterval(function () {
+                this.isShow = !this.isShow;
+            }.bind(this), 1000);
+            bind()的实现：
+            1.返回一个新函数
+            2.新韩淑内部会调用原函数(通过call调用)
+            3.在调用时指定原函数执行的this为bind()的第一个参数的值
+            */
+        },
+
+        /*
+        * 在vm死亡之前调用，在此做一些收尾工作
+        * */
+        beforeDestroy() {
+            clearInterval(this.intervalId);
+        },
+
+        methods: {
+            destroyVM () {
+                this.$destroy();
+            }
+        }
+    }).$mount('div');
+
+</script>
+</body>
+</html>

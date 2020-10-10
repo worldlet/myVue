@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<div>
+    <button @click="destroyVM">destroy vue</button>
+    <p v-show="isShow">xxx</p>
+    <p ref="content">{{isShow ? '真' : '假'}}</p>
+</div>
+<script src="../../js/vue.js"></script>
+<script>
+    /*
+    * vue对象的生命周期
+    *   1.初始化显示
+    *       - beforeCreate()            不能通过vm读取data中的数据
+    *       - created()                 可以通过vm读取data中的数据
+    *       - beforeMount()             不能通过ref读取页面标签对象
+    *       - mounted()                 可以通过ref读取页面标签对象
+    *   2.更新状态(数据)
+    *       - beforeUpdate()            看到的界面是老的界面
+    *       - update()                  看到的界面是新的界面
+    *   3.销毁vue实例：vm.$destory()
+    *       - beforeDestory()
+    *       - destoryed()
+    * 常用的生命周期方法：
+    *   mounted(): 发送ajax请求，启动定时器等异步任务
+    *   beforeDestory(): 做收尾工作，如：清除定时器
+    * */
+
+    new Vue({
+        data: {
+            isShow: true
+        },
+
+        beforeCreate() {    // =======>不能通过vm读取data中的数据
+            console.log('beforeCreate()', this.isShow);
+        },
+        // 实现数据代/data数据的监视(setter)
+        created() {         // =======>可以通过vm读取data中的数据
+            console.log('created()', this.isShow);
+        },
+
+        beforeMount() {     // =======>不能通过ref读取页面标签对象
+            console.log('beforeMount()', this.$refs.content);
+        },
+
+        /*
+        * 界面初始显示之后立即回调
+        * 一般在此执行异步操作：发ajax请求/启动定时器/订阅消息/绑定自定义事件监听
+        * */
+        mounted () {        // =======>可以通过ref读取页面标签对象
+            console.log('mounted()', this.$refs.content);
+            this.intervalId = setInterval(() => {
+                console.log('-------------');
+                this.isShow = !this.isShow;
+            }, 1000);
+            /*
+            方法一：不使用箭头函数，需要提前保存this
+            const that = this;
+            setInterval(function () {
+                that.isShow = !that.isShow;
+            }, 1000);
+            方法二：bind()
+            setInterval(function () {
+                this.isShow = !this.isShow;
+            }.bind(this), 1000);
+            bind()的实现：
+            1.返回一个新函数
+            2.新韩淑内部会调用原函数(通过call调用)
+            3.在调用时指定原函数执行的this为bind()的第一个参数的值
+            */
+        },
+
+        beforeUpdate() {    // =======>看到的界面是老的界面
+            console.log('beforeUpdate()', this.isShow, this.$refs.content.innerHTML);
+        },
+        // >>> 更新界面
+        updated() {    // =======>看到的界面是新的界面
+            console.log('updated()', this.isShow, this.$refs.content.innerHTML);
+        },
+
+        /*
+        * 在vm死亡之前调用，在此做一些收尾工作
+        * */
+        beforeDestroy() {
+            console.log('beforeDestroy()');
+            clearInterval(this.intervalId);
+        },
+
+        destroyed() {
+            console.log('destroyed()');
+        },
+
+        methods: {
+            destroyVM () {
+                this.$destroy();
+            }
+        }
+    }).$mount('div');
+
+</script>
+</body>
+</html>
